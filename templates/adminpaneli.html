@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/adminpaneliStil.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">  <title>Admin Paneli</title>
+</head>
+
+<body onload="renderTime()">
+  <div class="konteynirDiv">
+    <div class="baslikDiv shadow-lg rounded">
+      <div class="serverZamaniDiv">
+        <div style="text-align: center; color: black; font-size: 20px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">Server Zamanı:</div>
+        <div id="tarih_ekle" style="color: black; font-size: 20px; font-weight: 500; font-family: 'Rajdhani', sans-serif;"></div>
+      </div>
+      <div class="baslik">
+        <a href="/kitaplar"><img src="../static/img/kutuphane.png" alt="" width="80px" height="80px" style="margin-left: 18px;"></a>
+        <div style="height: 80px; line-height: 80px; font-family: 'Righteous', cursive; font-size: 60px; grid-column: 17/50; grid-row: 2/10; margin-left: 20px;">KİTAPHANE</div>
+      </div>
+      <div class="profilDiv">
+        <div class="profilIsmiDiv">Hoşgeldin, <br> {{ kullanici_adi }}.</div>
+        <div class="profilDugmesiDiv dropdown">
+          <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"
+            style="background-color: white; border-radius: 5%; appearance:none;">
+            <img src="../static/img/admin.png" width="80px" height="80px">
+          </button>
+          <form method="POST" action="/zaman_ilerlet" class="dropdown-menu p-3">
+            <div class="form-group" style="margin-bottom: 5px; width: 40px; height: 40px;">
+              <input type="text" class="form-control" name="ilerletilecek_gun" style="border: 1px solid gray; padding: 5px;">
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 5px; width: 100px; height: 38px; background-color: black; font-size: 18px; font-weight: 500; font-family: 'Rajdhani', sans-serif; padding: 5px; position: absolute; left: 60px; top: 17px;">Zamanı Bük</button>
+            <a href="/zaman_sifirla" class="btn btn-primary" style="width: 100%; height: 38px; background-color: black; font-size: 18px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">Günümüz</a>
+            <a href="/" class="btn btn-primary" style="width: 100%; height: 38px; background-color: black; margin-top: 5px; font-size: 18px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">Çıkış</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="kullaniciListeleDiv shadow-lg bg-white rounded">
+      <div style="grid-row: 1/7; grid-column: 1/81; display: block; font-size: 30px; font-weight: 700; font-family: 'Rajdhani', sans-serif; text-align: center; background-color: #00adb5; line-height: 60px;">KULLANICI BİLGİLERİ</div>
+      <div style="grid-column: 1/81; grid-row: 7/69; overflow-y: scroll; overflow-x: hidden;">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 25%; text-align: center;">Kullanıcı Adı</th>
+              <th scope="col" style="width: 18%; text-align: center;">Kitap Sayısı</th>
+              <th scope="col" style="width: 32%; text-align: center;">Kitaplar</th>
+              <th scope="col" style="width: 25%; text-align: center;">Kitap Alabilir Mi?</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for kullanici in kullaniciVeritabani  %}
+            <tr>
+              <td>{{kullanici.kullanici_adi}}</td>
+              <td>{{kullanici.ustundeki_kitap_sayisi}}</td>
+              <td>
+                {% for kitap in kitapVeriTabani %}
+                  {% if kullanici.kullanici_adi == kitap.kimde %}
+                    <span>{{kitap.kitap_adi}}</span><br>
+                  {% endif %}
+                {% endfor %}
+              </td>
+              <td>
+                {% if kullanici.kitap_alabilirmi == "Evet" %}
+                <span class="badge badge-success">Evet</span>
+                {% else %}
+                <span class="badge badge-danger">Hayır</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+    </div>
+
+    <form class="kitapEkleDiv shadow-lg bg-white rounded" action="" method="post"
+      enctype="multipart/form-data">
+
+      <div style="grid-row: 1/4; grid-column: 1/40; display: block; font-size: 30px; font-weight: 700; font-family: 'Rajdhani', sans-serif; text-align: center; background-color: #00adb5; line-height: 60px;">KİTAP EKLE</div>
+      
+      <div class="kitapResmiDiv">
+        <img id="output2" style="object-fit: contain; max-width:100%; max-height:100%; ">
+      </div>
+      <div style="grid-row: 25/27; grid-column: 5/20;">
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+              name="input_kitap_resmi" onchange="loadFile2(event)">
+            <label class="custom-file-label" for="inputGroupFile01" data-browse="Gözat" style="font-size: 18px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">Kitap resmi yükle</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="kitapISBNDiv">
+        <img id="output" style="object-fit: contain; max-width:100%; max-height:100%; ">
+      </div>
+      <div style="grid-row: 25/27; grid-column: 21/37;">
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="inputGroupFile02" aria-describedby="inputGroupFileAddon01"
+              name="input_isbn_resmi" onchange="loadFile(event)">
+            <label class="custom-file-label" for="inputGroupFile01" data-browse="Gözat" style="font-size: 18px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">ISBN resmi yükle</label>
+          </div>
+        </div>
+      </div>
+      <div style="grid-row: 28/29; grid-column: 5/11; font-size: 18px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">Kitap Adı:</div>
+      <input type="text" name="input_kitap_ismi" style="grid-column: 5/37; grid-row: 29/31;" autocomplete="off">
+      <button type="submit" class="btn btn-primary" style="grid-column: 5/37; grid-row: 32/34; background-color: black; border: none; font-size: 18px; font-weight: 600; font-family: 'Rajdhani', sans-serif;">Yükle</button>
+    </form>
+  </div>
+
+  <script>
+    var loadFile = function(event) {
+      var output = document.getElementById('output');
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src)
+      }
+    };
+    var loadFile2 = function(event) {
+      var output = document.getElementById('output2');
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src)
+      }
+    };
+  </script>
+
+  <script>
+    function renderTime() {
+      var tarih = new Date();
+      var yeniTarih = addDays(tarih, {{ kac_gun_ilerletildi }})
+    var yil = yeniTarih.getFullYear();
+    var ay = yeniTarih.getMonth() + 1;
+    var gun = yeniTarih.getDate();
+    document.getElementById("tarih_ekle").innerHTML = "" + gun + "/" + ay + "/" + yil + "-" + yeniTarih.getHours() + ":" + yeniTarih.getMinutes() + ":" + yeniTarih.getSeconds();
+    setTimeout("renderTime()", 1000);
+        }
+    function addDays(date, days) {
+      var result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+    renderTime();
+  </script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+.konteynirDiv{
+    width: 1600px;
+    height: 800px;
+    position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+    display: grid;
+
+    grid-template-columns: repeat(80, 20px);
+    grid-template-rows: repeat(40, 20px)
+}
+
+/* BAŞLIK KISMI BAŞLANGIÇ */
+.baslikDiv{
+    grid-row: 1/6;
+    grid-column:1/81;
+
+    background-color: #00adb5;
+    display: grid;
+    grid-template-columns: repeat(160, 10px);
+    grid-template-rows: repeat(10, 10px);
+}
+.baslik{
+    grid-row: 1/11;
+    grid-column: 60/123;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.serverZamaniDiv{
+    grid-row: 1/11; 
+    grid-column: 1/60;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 70px;
+}
+.profilDiv{
+    grid-row: 1/11; 
+    grid-column: 123/155;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.profilIsmiDiv{
+    height: 100px;
+    width: 180px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px; 
+    font-weight: 500;
+    color: black;
+}
+.profilDugmesiDiv{
+    height: 100px;
+    width: 100px;
+    border-radius: 5%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dropdown-menu {
+    width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+/* BAŞLIK KISMI BİTİŞ */
+
+.kullaniciListeleDiv{
+    grid-row: 7/41;
+    grid-column: 1/41;
+
+
+    display: grid;
+    grid-template-columns: repeat(80, 10px);
+    grid-template-rows: repeat(68, 10px);
+    
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+/* KİTAP EKLEME KISMI BAŞLANGIÇ*/
+.kitapEkleDiv{
+    grid-row: 7/41;
+    grid-column: 42/81;
+
+
+    display: grid;
+    grid-template-columns: repeat(40,20px);
+    grid-template-rows: repeat(34,20px);
+}
+.kitapResmiDiv{
+    grid-row: 5/25; 
+    grid-column: 5/20;
+
+    display: flex;
+    justify-content: center;
+}
+.kitapISBNDiv{
+    grid-row: 5/25;
+    grid-column: 21/37;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+/* KİTAP EKLEME KISMI BİTİŞ */
+
+td, th{
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+}
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }

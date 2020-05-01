@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../static/css/kullanicipaneliStil.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">  <title>Admin Paneli</title>
+
+  <title>Kullanıcı Paneli</title>
+</head>
+
+<body onload="serverZamani()">
+  <div class="konteynirDiv">
+    <div class="baslikDiv shadow-lg rounded">
+      <div class="serverZamaniDiv">
+        <div style="text-align: center; color: black; font-size: 20px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">Server Zamanı:</div>
+        <div id="tarih_ekle" style="text-align: center; color: black; font-size: 20px; font-weight: 500; font-family: 'Rajdhani', sans-serif;"></div>
+      </div>
+      <div class="baslik">
+        <a href="/kitaplar"><img src="../static/img/kutuphane.png" alt="" width="80px" height="80px" style="margin-left: 18px;"></a>
+        <div style="height: 80px; line-height: 80px; font-family: 'Righteous', cursive; font-size: 60px; grid-column: 17/50; grid-row: 2/10; margin-left: 20px;">KİTAPHANE</div>
+      </div>
+      <div class="profilDiv">
+        <div class="profilIsmiDiv">Hoşgeldin, <br> {{ kullanici.kullanici_adi }}.</div>
+        <div class="profilDugmesiDiv dropdown">
+          <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: white; border-radius: 5%; appearance:none;">
+            <img src="../static/img/user.png" width="80px" height="80px">
+          </button>
+          <div class="dropdown-menu p-3">
+            <a href="/" class="btn btn-primary" style="width: 100%; height: 38px; background-color: black; margin-top: 5px; font-size: 20px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">Çıkış</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="kitapalDiv shadow-lg bg-white rounded">
+      <div style="grid-row: 1/7; grid-column: 1/119; display: block; font-size: 30px; font-weight: 700; font-family: 'Rajdhani', sans-serif; text-align: center; background-color: #00adb5; line-height: 60px;">KİTAP AL</div>
+      
+      <input type="text" id="aranacakKelime" onkeyup="aramaFonksiyonu()" placeholder="Kitap adı veya ISBN numarası ile kitap ara." autocomplete="off" style="text-align: center; font-size: 15px; font-weight: 500; font-family: 'Rajdhani', sans-serif;">
+      <table id="tablo">
+        <tr class="header">
+          <th style="text-align: center; width: 9%;">ISBN</th>
+          <th style="text-align: center; width: 41%;">Kitap Adı</th>
+          <th style="text-align: center; width: 11%;">Kimde?</th>
+          <th style="text-align: center; width: 24%;">Verileceği Tarih</th>
+          <th style="text-align: center; width: 15%;">Kitabı Al</th>
+        </tr>
+        {% for kitap in kitaplarVeritabani %}
+        <tr>
+          <td style="text-align: center;">{{kitap.kitap_isbn}}</td>
+          <td style="text-align: center;">{{kitap.kitap_adi}}</td>
+          <td style="text-align: center;">{{kitap.kimde}}</td>
+          <td style="text-align: center;">{{kitap.verilecegi_tarihi}}</td>
+          <td style="text-align: center;">
+            {% if kitap.kimde == "" and kullanici.kitap_alabilirmi == "Evet" %}
+            <form action="" method="POST">
+              <input type="hidden" name="hangi_kitap_alinacak" value= "{{kitap.kitap_isbn}}">
+              <input type="hidden" id="{{kitap.kitap_isbn}}" name="verilecegi_tarihi" value= "">
+              <button type="submit" class="btn btn-success table_buton" value="submit" style="width:100%" onmouseup="verilecegiTarihAta({{kitap.kitap_isbn}})">Al</button>
+            </form>
+            {% else %}
+            <form action="" method="POST">
+              <input type="hidden" name="hangi_kitap_alinacak" value= "{{kitap.kitap_isbn}}">
+              <input type="hidden" id="{{kitap.kitap_isbn}}" name="verilecegi_tarihi" value= "">
+              <button type="submit" class="btn btn-danger table_buton" value="submit" style="width:100%" onmouseup="verilecegiTarihAta({{kitap.kitap_isbn}})">Al</button>
+            </form>
+            {% endif %}
+           
+          </td>
+        </tr>
+        {% endfor %}
+        
+      </table>
+      
+    </div>
+
+    <form class="kitapverDiv shadow-lg bg-white rounded" action="" method="post" enctype="multipart/form-data">
+      <div style="grid-row: 1/7; grid-column: 1/41; display: block; font-size: 30px; font-weight: 700; font-family: 'Rajdhani', sans-serif; text-align: center; background-color: #00adb5; line-height: 60px;">KİTAP VER</div>
+      <div class="kitapResmiDiv">
+        <img id="output" style="object-fit: contain; max-width:100%; max-height:100%; ">
+      </div>
+      <div style="grid-row: 52/60; grid-column: 6/36;">
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="input_verilecek_kitap_isbn" onchange="loadFile(event)">
+            <label class="custom-file-label" for="inputGroupFile01" data-browse="Gözat">ISBN resmi yükle</label>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="grid-column: 6/36; grid-row: 57/61; background-color: black; border: none;">İade Et</button>
+    </form>
+  </div>
+  <script>
+    var loadFile = function(event) {
+      var output = document.getElementById('output');
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src)
+      }
+    };
+  </script>
+  <script>
+    function aramaFonksiyonu() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("aranacakKelime");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("aranacakKelime");
+      tr = table.getElementsByTagName("tr");
+    
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        td2 = tr[i].getElementsByTagName("td")[1];
+        if (td || td2) {
+          txtValue = td.textContent || td.innerText;
+          txtValue2 = td2.textContent || td2.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    function verilecegiTarihAta(buton_id){
+      var tarih = new Date();
+      tarih.setDate(tarih.getDate() + {{ kac_gun_ilerletildi }} + 7);
+      var yil = tarih.getFullYear();
+      var ay = tarih.getMonth() + 1;
+      var gun = tarih.getDate();
+      document.getElementById(buton_id).value = gun + "/" + ay + "/" + yil;
+    }
+  </script>
+  <script>
+    function serverZamani() {
+      var tarih = new Date();
+      tarih.setDate(tarih.getDate() + {{ kac_gun_ilerletildi }});
+      var yil = tarih.getFullYear();
+      var ay = tarih.getMonth() + 1;
+      var gun = tarih.getDate();
+      document.getElementById("tarih_ekle").innerHTML = gun + "/" + ay + "/" + yil + "-" + tarih.getHours() + ":" + tarih.getMinutes() + ":" + tarih.getSeconds();
+      setTimeout("serverZamani()", 1000);
+    } 
+  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+
+</html>

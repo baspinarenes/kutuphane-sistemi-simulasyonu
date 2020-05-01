@@ -1,0 +1,31 @@
+.baslikDiv{
+    width: 1600px;
+    height: 100px;
+    margin: 91px auto 20px;
+    display: grid;
+    grid-template-columns: repeat(160, 10px);
+    grid-template-rows: repeat(10, 10px);
+}
+
+.kitaplarDiv{
+    width: 1600px;
+    height: 680px;
+    margin: 0px auto;
+    overflow-y:scroll;
+    overflow-x: hidden;
+    
+    display: grid;
+    grid-template-columns: 330px 330px 330px 330px 330px;
+}
+.innerDiv {
+    position:relative;
+    float:left;
+    width: 310px; 
+    height: 450px;
+
+    margin-bottom: 20px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

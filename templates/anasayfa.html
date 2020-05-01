@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/anasayfaStil.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">  <title>Admin Paneli</title>
+    <title>Anasayfa</title>
+</head>
+
+<body>
+    <div class="konteynirDiv">
+        <div class="baslikDiv shadow-lg rounded" style="background-color: #00adb5;">KİTAPHANE</div>
+        <div class="adminGirisiDiv">
+            <div class="adminGirisiDiv-container shadow-lg bg-white rounded">
+                <div class="adminGirisiDiv-on">
+                    <input class="adminArkayaCevirButon" type="image" src="../static/img/next.png" width="50px" height="50px" style="grid-column: 40/45; grid-row: 2/6; outline:none;">
+                    <img class="adminResmi" src="../static/img/admin.png">
+                    <div class="card text-white bg-dark mb-3"
+                        style="grid-row: 49/63; grid-column: 1/46; width: 100%; position: relative;">
+                        <div class="card-header" style="text-align: center; font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 500;">ADMİN</div>
+                        <div class="card-body">
+                            <p class="card-text" style="text-align: center; font-size: 14px; font-family: 'Rajdhani', sans-serif;  font-weight: 500;">- Kitap ekleyebilir ve kullanıcıları listeleyebilir.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="adminGirisiDiv-arka">
+                    <input class="adminOneCevirButon" type="image" src="../static/img/next.png" width="50px" height="50px" style="grid-column: 2/7; grid-row: 2/6; transform: rotate(180deg); outline:none;">
+                    <form name="adminForm" action="/" method="post" autocomplete="off" style="width: 350px; height: 250px; grid-row: 18/43; grid-column: 6/42;  display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="form-group" style="width: 350px; ">
+                          <label for="formGroupExampleInput" style="font-family: 'Rajdhani', sans-serif;  font-weight: 500; font-size: 20px;">Kullanıcı Adı:</label>
+                          <input type="text" name="input_admin_adi" class="form-control" id="formGroupExampleInput" autofocus>
+                        </div>
+                        <input type="hidden" name="giris" value="admin"/>
+                        <div class="form-group" style="width: 350px;">
+                          <label for="formGroupExampleInput2" style="font-family: 'Rajdhani', sans-serif;  font-weight: 500; font-size: 20px;">Şifre:</label>
+                          <input type="password" name="input_admin_sifre" class="form-control" id="formGroupExampleInput2">
+                        </div>
+                        <label for="formGroupExampleInput"></label>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block" style="width: 350px; height: 50px; grid-column: 5/41; grid-row: 55/60; background-color: #00adb5; font-family: 'Rajdhani', sans-serif;  font-weight: 500; font-size: 20px; border: none;">Giriş</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="kullaniciGirisiDiv">
+            <div class="kullaniciGirisiDiv-container shadow-lg bg-white rounded">
+                <div class="kullaniciGirisiDiv-on">
+                    <input class="kullaniciArkayaCevirButon" type="image" src="../static/img/next.png" width="50px" height="50px" style="grid-column: 2/7; grid-row: 2/6; transform: rotate(180deg); outline:none;">
+                    <img class="kullaniciResmi" src="../static/img/user.png">
+                    <div class="card text-white bg-dark mb-3"
+                        style="grid-row: 49/63; grid-column: 1/46; width: 100%; position: relative;">
+                        <div class="card-header" style="text-align: center; font-family: 'Rajdhani', sans-serif;  font-weight: 500; font-size: 20px;">KULLANICI</div>
+                        <div class="card-body">
+                            <p class="card-text" style="text-align: center; font-size: 14px; font-family: 'Rajdhani', sans-serif;  font-weight: 500;">- Kitap arayabilir, ödünç alabilir ve iade edebilir.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kullaniciGirisiDiv-arka">
+                    <input class="kullaniciOneCevirButon" type="image" src="../static/img/next.png" width="50px" height="50px" style="grid-column: 40/45; grid-row: 2/6; outline:none;">
+                   <form class="kullaniciForm" action="/" method="post" autocomplete="off" style="width: 350px; height: 250px; grid-row: 18/43; grid-column: 6/42;  display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="form-group" style="width: 350px; ">
+                          <label for="formGroupExample1Input" style="font-family: 'Rajdhani', sans-serif;  font-weight: 500; font-size: 20px;">Kullanıcı Adı:</label>
+                          <input type="text" name="input_kullanici_adi" class="form-control" id="formGroupExample1Input" autofocus>
+                        </div>
+                        <input type="hidden" name="giris2" value="kullanici"/>
+                        <div class="form-group" style="width: 350px;">
+                          <label for="formGroupExample1Input2" style="font-family: 'Rajdhani', sans-serif;  font-weight: 500; font-size: 20px;">Şifre:</label>
+                          <input type="password" name="input_kullanici_sifre" class="form-control" id="formGroupExample1Input2">
+                        </div>
+                        <label for="formGroupExampleInput"></label>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block" style="width: 350px; height: 50px; grid-column: 5/41; grid-row: 55/60; background-color: #00adb5; font-family: 'Rajdhani', sans-serif;  font-weight: 500; font-size: 20px;">Giriş</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="imzaDiv" style="text-align: center; color: grey; font-family: 'Rajdhani', sans-serif;  font-weight: 500; font-size: 18px;"> @ Powered by Yazlab</div>
+    </div>
+
+    <script type="text/javascript" src="../static/js/fonksiyon.js"></script>
+</body>
+
+</html>
